@@ -9,17 +9,31 @@
   </head>
   <body>
     <h1>Tic Tac Toe</h1>
-    <h2 class="message">Player 1, it's your turn!</h2>
-    <div class="board-container">
-      <button class="board-btn" data-id="0"></button>
-      <button class="board-btn" data-id="1"></button
-      ><button class="board-btn" data-id="2"></button
-      ><button class="board-btn" data-id="3"></button
-      ><button class="board-btn" data-id="4"></button
-      ><button class="board-btn" data-id="5"></button
-      ><button class="board-btn" data-id="6"></button
-      ><button class="board-btn" data-id="7"></button
-      ><button class="board-btn" data-id="8"></button>
+    <div class="name-form-section">
+      <form action="get" method="dialog" id="player-name-form">
+        <h3>Enter Player Names</h3>
+        <label for="p1-name">Player 1: </label>
+        <input type="text" id="p1-name" name="p1-name" class="name-input" />
+        <label for="p2-name">Player 2: </label>
+        <input type="text" id="p2-name" name="p2-name" class="name-input" />
+        <button class="name-submit-btn" id="name-submit-btn">
+          Start Game!
+        </button>
+      </form>
+    </div>
+    <div class="game-section hidden">
+      <h2 class="message"></h2>
+      <div class="board-container">
+        <button class="board-btn" data-id="0"></button>
+        <button class="board-btn" data-id="1"></button
+        ><button class="board-btn" data-id="2"></button
+        ><button class="board-btn" data-id="3"></button
+        ><button class="board-btn" data-id="4"></button
+        ><button class="board-btn" data-id="5"></button
+        ><button class="board-btn" data-id="6"></button
+        ><button class="board-btn" data-id="7"></button
+        ><button class="board-btn" data-id="8"></button>
+      </div>
     </div>
   </body>
 </html>

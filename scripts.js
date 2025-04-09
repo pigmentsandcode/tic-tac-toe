@@ -29,15 +29,19 @@ function createPlayer(playerName, playerMarker) {
   return { getPlayer };
 }
 
-const gameController = (function (player1Name, player2Name) {
+const gameController = (function () {
   const gameBoard = createGameboard();
 
-  const players = [
-    createPlayer(player1Name, "X"),
-    createPlayer(player2Name, "O"),
-  ];
+  const players = [];
   let activePlayerIndex = 0;
   let winner = "none";
+
+  function initGame(player1Name, player2Name) {
+    players.push(
+      createPlayer(player1Name, "X"),
+      createPlayer(player2Name, "O")
+    );
+  }
 
   function switchActivePlayer() {
     activePlayerIndex = activePlayerIndex === 0 ? 1 : 0;
@@ -111,10 +115,12 @@ const gameController = (function (player1Name, player2Name) {
     getActivePlayer,
     getBoard,
     playerTurn,
+    initGame,
   };
-})("P1", "P2");
+})();
 
 const displayController = (function () {
+  const nameFormEl = document.querySelector("#player-name-form");
   const boardBtnEls = document.querySelectorAll(".board-btn");
   const messageEl = document.querySelector(".message");
 
@@ -122,6 +128,16 @@ const displayController = (function () {
     const spot = parseInt(e.target.dataset.id);
     gameController.playerTurn(spot);
     e.target.removeEventListener("click", handleSpotClick);
+  }
+
+  function handleNameClick(e) {
+    e.preventDefault();
+    const p1Name = document.querySelector("#p1-name").value;
+    const p2Name = document.querySelector("#p2-name").value;
+    gameController.initGame(p1Name, p2Name);
+    nameFormEl.classList.add("hidden");
+    document.querySelector(".game-section").classList.remove("hidden");
+    renderMessage(`${gameController.getActivePlayer().name} it's your turn`);
   }
 
   function renderBoard() {
@@ -137,6 +153,8 @@ const displayController = (function () {
   function renderMessage(message) {
     messageEl.textContent = message;
   }
+
+  nameFormEl.addEventListener("submit", handleNameClick);
 
   boardBtnEls.forEach((btnEl) => {
     btnEl.addEventListener("click", handleSpotClick);
