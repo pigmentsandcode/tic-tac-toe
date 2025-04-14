@@ -120,6 +120,7 @@ const gameController = (function () {
 })();
 
 const displayController = (function () {
+  const nameSectionEl = document.querySelector(".name-form-section");
   const nameFormEl = document.querySelector("#player-name-form");
   const boardBtnEls = document.querySelectorAll(".board-btn");
   const messageEl = document.querySelector(".message");
@@ -135,9 +136,13 @@ const displayController = (function () {
     const p1Name = document.querySelector("#p1-name").value;
     const p2Name = document.querySelector("#p2-name").value;
     gameController.initGame(p1Name, p2Name);
-    nameFormEl.classList.add("hidden");
+    nameSectionEl.classList.add("hidden");
     document.querySelector(".game-section").classList.remove("hidden");
-    renderMessage(`${gameController.getActivePlayer().name} it's your turn`);
+    renderMessage(
+      `${gameController.getActivePlayer().name} (${
+        gameController.getActivePlayer().marker
+      }) it's your turn`
+    );
   }
 
   function renderBoard() {
