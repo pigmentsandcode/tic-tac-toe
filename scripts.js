@@ -15,7 +15,11 @@ function createGameboard() {
     }
   }
 
-  return { getBoard, markBox };
+  function clearBoard() {
+    boardArr.fill("");
+  }
+
+  return { getBoard, markBox, clearBoard };
 }
 
 function createPlayer(playerName, playerMarker) {
@@ -53,6 +57,16 @@ const gameController = (function () {
 
   function getBoard() {
     return gameBoard.getBoard();
+  }
+
+  function restartGame() {
+    gameBoard.clearBoard();
+    activePlayerIndex = 0;
+    console.log(gameBoard.getBoard());
+    displayController.clearBoard();
+    displayController.renderMessage(
+      `${getActivePlayer().name} (${getActivePlayer().marker}) turn!`
+    );
   }
 
   function checkWinner() {
@@ -116,6 +130,7 @@ const gameController = (function () {
     getBoard,
     playerTurn,
     initGame,
+    restartGame,
   };
 })();
 
@@ -124,6 +139,7 @@ const displayController = (function () {
   const nameFormEl = document.querySelector("#player-name-form");
   const boardBtnEls = document.querySelectorAll(".board-btn");
   const messageEl = document.querySelector(".message");
+  const restartBtnEl = document.querySelector(".restart-btn");
 
   function handleSpotClick(e) {
     const spot = parseInt(e.target.dataset.id);
@@ -143,6 +159,17 @@ const displayController = (function () {
         gameController.getActivePlayer().marker
       }) it's your turn`
     );
+  }
+
+  function handleRestartClick(e) {
+    gameController.restartGame();
+  }
+
+  function clearBoard() {
+    boardBtnEls.forEach((btnEl) => {
+      btnEl.textContent = "";
+      btnEl.addEventListener("click", handleSpotClick);
+    });
   }
 
   function renderBoard() {
@@ -165,5 +192,7 @@ const displayController = (function () {
     btnEl.addEventListener("click", handleSpotClick);
   });
 
-  return { renderBoard, renderMessage };
+  restartBtnEl.addEventListener("click", handleRestartClick);
+
+  return { renderBoard, renderMessage, clearBoard };
 })();

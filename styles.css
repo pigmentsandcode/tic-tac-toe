@@ -67,6 +67,12 @@ h1 {
   font-weight: 700;
 }
 
+.restart-btn {
+  width: 150px;
+  justify-self: center;
+  padding: 5px 0;
+}
+
 .hidden {
   display: none;
 }
